@@ -104,7 +104,7 @@ class iphone_24hstore(scrapy.Spider):
                                                                                                 '').replace(
                             '\n', '')
 
-                yield {
+                yield convet({
                     'Tên sản phẩm': item.css('div.name h3::text').get(),
                     'Giá sản phẩm': str(item.css('span.price::text').get()).replace('đ', ' VNĐ'),
                     'Kích thước màn hình': kich_thuoc_man_hinh,
@@ -117,6 +117,6 @@ class iphone_24hstore(scrapy.Spider):
                     'Pin': Pin,
                     'Bluetooth': bluetooth,
                     'Link': link
-                }
+                })
             except:
                 continue
