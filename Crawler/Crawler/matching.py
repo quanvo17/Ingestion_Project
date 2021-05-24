@@ -63,7 +63,7 @@ def transform(text):
     resolution = ["resolution", "độ phân giải", "độ phân giải màn hình"]
     screentech = ["screentech", "màn hình", "công nghệ màn hình"]
     screensize = ["screensize", "kích thước màn hình"]
-    cpu = ["cpu", "chip", "chipset", "Bộ vi xử lý"]
+    cpu = ["cpu", "chip", "chipset", "Bộ vi xử lý", "Cấu hình", "cấu hình"]
     rom = ["rom", "bộ nhớ trong", "Ổ cứng", "Memory Storage Capacity"]
     ram = ["ram", "Ram"]
     pin = ["pin", "PIN", "dung lượng pin", "Batteries"]
