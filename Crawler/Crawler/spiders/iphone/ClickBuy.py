@@ -110,7 +110,7 @@ class ClickBuy(scrapy.Spider):
                     'p').text
             except:
                 ram = None
-            yield {
+            yield convert({
                 'Tên sản phẩm': item.css('h2.woocommerce-loop-product__title::text').get(),
                 'Giá sản phẩm': price,
                 'Link': link,
@@ -125,4 +125,4 @@ class ClickBuy(scrapy.Spider):
                 'Kích thước màn hình': kichthuocmanhinh,
                 'Bluetooth': '',
                 'Ram': ram,
-            }
+            })

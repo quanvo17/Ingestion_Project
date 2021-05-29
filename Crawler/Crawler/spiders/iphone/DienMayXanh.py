@@ -13,8 +13,6 @@ class DienMayXanh(scrapy.Spider):
                 local url = splash.args.url
                 assert(splash:go(url))
                 assert(splash:wait(2))
-                assert(splash:runjs('document.getElementsByClassName("loadmore")[0].click();'))
-                assert(splash:wait(5))
                 return {
                     html = splash:html(),
                     url = splash:url(),
@@ -38,21 +36,20 @@ class DienMayXanh(scrapy.Spider):
     def parse(self, response):
         headers = {
             'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'}
-        items = response.css('div.prdWrFixHe')
-        print(len(items))
+        items = response.xpath('//*[@id="categoryPage"]/div[3]/ul').css('li.item')
         for item in items:
-            thongtins = item.css('div.prdTooltip')[0]
-            yield convert({
-                "Tên sản phẩm": item.css('div.prdName span::text').get(),
-                "Giá sản phẩm": str(item.css('strong.prPrice::text').get()).replace('₫', ' VNĐ'),
-                "Màn hình": str(thongtins.css('span::text')[0].get()).split(', ')[0].replace('"', ' inch'),
-                "Chip": str(thongtins.css('span::text')[0].get()).split(', ')[1],
-                'RAM': str(thongtins.css('span::text')[1].get()).split(', ')[0].replace('RAM ', ''),
-                'Bộ nhớ trong': str(thongtins.css('span::text')[1].get()).split(', ')[1].replace('ROM ', ''),
-                'Camera sau': str(thongtins.css('span::text')[2].get()).replace('Camera sau: ', ''),
-                'Camera trước': str(thongtins.css('span::text')[3].get()).replace('Camera trước:  ', ''),
-                'Pin': str(thongtins.css('span::text')[4].get()).split(', ')[0].replace('Pin ', ''),
-                'Sạc': str(thongtins.css('span::text')[4].get()).split(', ')[1].replace('Sạc ', ''),
-                'Loại sản phẩm': 'IPHONE',
-                'Cửa hàng': 'DIEN MAY XANH'
-            })
+            thongtin = dict()
+            thongtin['name'] = str(item.css('h3::text').get()).replace('\n', '').replace('\t', '').replace('\r', '')
+            thongtin['prict'] = item.css('strong.price::text').get()
+            thongtin['screen'] = str(item.css('div.utility').css('p::text')[0]).split(',')[0]
+            thongtin['CPU']  = str(item.css('div.utility').css('p::text')[0]).split(',')[1]
+
+            thongtin['RAM'] = str(item.css('div.utility').css('p::text')[1]).split(',')[0]
+            thongtin['ROM'] = str(item.css('div.utility').css('p::text')[1]).split(',')[1]
+
+            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[2])
+            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[3])
+            thongtin['pin'] = str(item.css('div.utility').css('p::text')[4])
+
+
+            yield thongtin
