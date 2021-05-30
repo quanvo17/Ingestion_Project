@@ -52,4 +52,4 @@ class DienMayXanh(scrapy.Spider):
             thongtin['pin'] = str(item.css('div.utility').css('p::text')[4])
 
 
-            yield thongtin
+            yield convert(thongtin)
