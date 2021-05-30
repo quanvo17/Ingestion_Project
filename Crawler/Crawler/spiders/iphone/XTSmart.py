@@ -73,7 +73,7 @@ class XTSmart(scrapy.Spider):
 
                 except:
                     continue
-            yield {
+            yield  convert({
                 "Tên sản phẩm": item.css('h3 a::text').get(),
                 "Giá sản phẩm": item.css('div.price::text').get().replace('đ', 'VNĐ'),
                 'CPU': CPU,
@@ -86,4 +86,4 @@ class XTSmart(scrapy.Spider):
                 "Camera sau": Camera_sau,
                 'Camera trước': Camera_truoc,
                 "Link": link
-            }
+            })

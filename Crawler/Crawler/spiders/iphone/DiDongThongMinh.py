@@ -3,7 +3,7 @@ from scrapy_splash import SplashRequest
 from scrapy import *
 import requests
 from bs4 import BeautifulSoup
-# from Crawler.matching import *
+from Crawler.matching import *
 
 
 class didongthongminh_iphone(scrapy.Spider):
@@ -93,7 +93,7 @@ class didongthongminh_iphone(scrapy.Spider):
                         bluetooth = information.find('a').text
                 except:
                     continue
-            yield {
+            yield convert({
                 "name": item.css('span.dst_primtitle::text').get(),
                 "Giá sản phẩm": item.css('span.woocommerce-Price-amount::text').get() + ' VNĐ',
                 'CPU': CPU,
@@ -106,4 +106,4 @@ class didongthongminh_iphone(scrapy.Spider):
                 "Camera sau": Camera_sau,
                 'Camera trước': Camera_truoc,
                 "Link": link
-            }
+            })

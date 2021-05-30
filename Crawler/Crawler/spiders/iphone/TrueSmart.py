@@ -91,7 +91,7 @@ class TrueSmart(scrapy.Spider):
                         str(information.find_all('td')[0].text).replace('\t', '').replace('\n', '') == 'RAM':
                     Ram = information.find_all('td')[1].text
 
-            yield {
+            yield convert({
                 'Tên sản phẩm': item.css('strong.t')[0].css('a::text').get(),
                 'Giá sản phẩm': str(item.css('b.b::text').get()).replace('₫', 'VNĐ'),
                 'Bộ nhớ trong': ROM,
@@ -103,4 +103,4 @@ class TrueSmart(scrapy.Spider):
                 "RAM": Ram,
                 "Pin": Pin,
                 'Link': link
-            }
+            })
