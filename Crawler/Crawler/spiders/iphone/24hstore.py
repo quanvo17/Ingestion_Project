@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from Crawler.matching import *
 
 
-class iphone_24hstore(scrapy.Spider):
+class iphone_24hStore(scrapy.Spider):
     name = 'iphone_24hstore'
     start_urls = ["https://24hstore.vn/dien-thoai-iphone-apple"]
     script = """
