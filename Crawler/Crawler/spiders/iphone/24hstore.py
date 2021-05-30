@@ -41,82 +41,15 @@ class iphone_24hstore(scrapy.Spider):
 
         items = response.xpath('//*[@id="box_product"]').css('div.product')
         for item in items:
-            Ram = ''
-            CPU = ''
-            kich_thuoc_man_hinh = ''
-            ROM = ''
-            do_phan_giai_man_hinh = ''
-            Pin = ''
-            Camera_sau = ''
-            Camera_truoc = ''
-            bluetooth = ''
+            thongtin = dict()
             link = item.css('div.frame_inner')[0].css('a').attrib['href']
             req = requests.get(link, headers=headers)
             soup = BeautifulSoup(req.text, "lxml")
-            try:
-                # print(link)
-                # print(len(soup.find_all('table', class_='charactestic_table_detail')))
-                informations = soup.find_all('table', class_='charactestic_table_detail')[0].find_all('tr')
-                for information in informations:
-                    if information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                     '') == 'Mànhìnhrộng:':
-                        kich_thuoc_man_hinh = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                                          '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Độphângiải:':
-                        do_phan_giai_man_hinh = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                                            '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Ram:':
-                        Ram = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                          '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Bộnhớtrong:':
-                        ROM = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                          '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'CPU:':
-                        CPU = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                          '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'CameraSau:':
-                        Camera_sau = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                                 '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Cameratrước:':
-                        Camera_truoc = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                                   '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Dunglượngpin:':
-                        Pin = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                          '').replace(
-                            '\n', '')
-                    elif information.find_all('td')[0].text.replace(' ', '').replace('\r', '').replace('\n',
-                                                                                                       '') == 'Bluetooth:':
-                        bluetooth = information.find_all('td')[1].text.replace(' ', '').replace('\r',
-                                                                                                '').replace(
-                            '\n', '')
-
-                yield convet({
-                    'Tên sản phẩm': item.css('div.name h3::text').get(),
-                    'Giá sản phẩm': str(item.css('span.price::text').get()).replace('đ', ' VNĐ'),
-                    'Kích thước màn hình': kich_thuoc_man_hinh,
-                    'Độ phân giải màn hình': do_phan_giai_man_hinh,
-                    'Ram': Ram,
-                    'Bộ nhớ trong': ROM,
-                    'CPU': CPU,
-                    'Camera sau': Camera_sau,
-                    'Camera trước': Camera_truoc,
-                    'Pin': Pin,
-                    'Bluetooth': bluetooth,
-                    'Link': link
-                })
-            except:
-                continue
+            informations = soup.find('table', class_='charactestic_table').find_all('tr')
+            for information in informations:
+                label = str(information.find_all('td')[0].text).replace('\n', '').replace('\t', '').replace('\r', '').replace(":", '')
+                value = str(information.find_all('td')[1].text).replace('\n', '').replace('\t', '').replace('\r', '').replace(":", '')
+                thongtin[label] = value
+            thongtin['name'] = item.css('div.name h3::text').get()
+            thongtin['price'] =item.css('span.price::text').get()
+            yield convert(thongtin)
