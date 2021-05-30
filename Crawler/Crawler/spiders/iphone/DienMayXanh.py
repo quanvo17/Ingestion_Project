@@ -41,15 +41,15 @@ class DienMayXanh(scrapy.Spider):
             thongtin = dict()
             thongtin['name'] = str(item.css('h3::text').get()).replace('\n', '').replace('\t', '').replace('\r', '')
             thongtin['prict'] = item.css('strong.price::text').get()
-            thongtin['screen'] = str(item.css('div.utility').css('p::text')[0]).split(',')[0]
-            thongtin['CPU']  = str(item.css('div.utility').css('p::text')[0]).split(',')[1]
+            thongtin['screen'] = str(item.css('div.utility').css('p::text')[0].get()).split(',')[0]
+            thongtin['CPU']  = str(item.css('div.utility').css('p::text')[0].get()).split(',')[1]
 
-            thongtin['RAM'] = str(item.css('div.utility').css('p::text')[1]).split(',')[0]
-            thongtin['ROM'] = str(item.css('div.utility').css('p::text')[1]).split(',')[1]
+            thongtin['RAM'] = str(item.css('div.utility').css('p::text')[1].get()).split(',')[0]
+            thongtin['ROM'] = str(item.css('div.utility').css('p::text')[1].get()).split(',')[1]
 
-            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[2])
-            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[3])
-            thongtin['pin'] = str(item.css('div.utility').css('p::text')[4])
+            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[2].get())
+            thongtin['camera sau'] = str(item.css('div.utility').css('p::text')[3].get())
+            thongtin['pin'] = str(item.css('div.utility').css('p::text')[4].get())
 
 
             yield convert(thongtin)
