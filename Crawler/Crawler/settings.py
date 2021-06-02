@@ -12,7 +12,7 @@ BOT_NAME = 'Crawler'
 SPIDER_MODULES = ['Crawler.spiders']
 NEWSPIDER_MODULE = 'Crawler.spiders'
 
-SPLASH_URL = 'http://localhost:8050'
+SPLASH_URL = 'http://splash:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
 COOKIES_ENABLED = True
