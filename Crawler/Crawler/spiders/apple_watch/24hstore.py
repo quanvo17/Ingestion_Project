@@ -4,6 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 from Crawler.matching import *
 
+
 class watch_24hstore(scrapy.Spider):
     name = 'watch_24hstore'
     start_urls = ["https://24hstore.vn/apple-watch-chinh-hang"]
@@ -13,7 +14,7 @@ class watch_24hstore(scrapy.Spider):
                 assert(splash:go(url))
                 assert(splash:wait(1))
                 assert(splash:runjs('for(var i = 0 ; i < 10 ; i ++){document.getElementById("load_more_button").click();}'))
-                assert(splash:wait(5))
+                assert(splash:wait(10))
                 return {
                     html = splash:html(),
                     url = splash:url(),
@@ -44,14 +45,16 @@ class watch_24hstore(scrapy.Spider):
             thongtin['name'] = item.css('div.name h3::text').get()
             thongtin['price'] = str(item.css('span.price::text').get()).replace('đ', ' VNĐ')
             link = item.css('div.frame_inner')[0].css('a').attrib['href']
-            req = requests.get(link, headers=headers)
-            soup = BeautifulSoup(req.text, "lxml")
-            informations = soup.find_all('table', class_='charactestic_table_detail')[1].find_all('tr')
-            for information in informations:
-                label = str(information.find('td', class_='title').text).replace(':', '').replace('\n', '').replace('\t','').replace('\r', '')
-                value = str(information.find('td', class_='content_charactestic').text).replace('\n', '').replace('\t','').replace('\r', '')
-                thongtin[label] = value
-
-            thongtin['link'] = link
+            # req = requests.get(link, headers=headers)
+            # soup = BeautifulSoup(req.text, "lxml")
+            # informations = soup.find('table', class_='charactestic_table').find_all('tr')
+            # for information in informations:
+            #     label = str(information.find_all('td')[0].text).replace(':', '').replace('\n', '').replace(
+            #         '\t', '').replace('\r', '')
+            #     value = str(information.find('td')[0].text).replace('\n', '').replace('\t', '').replace(
+            #         '\r', '')
+            #
+            #     thongtin[label] = value
+            #
+            # thongtin['link'] = link
             yield convert(thongtin)
-
