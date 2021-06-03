@@ -1,8 +1,9 @@
 import scrapy
-from Crawler.matching import *
+from scrapy.http import request
+import requests
 
 
-class HanoiComputer(scrapy.Spider):
+class Macbook24h(scrapy.Spider):
     name = 'macbook_HanoiComputer'
     allowed_domains = ['www.hanoicomputer.vn']
     start_urls = ['https://www.hanoicomputer.vn/laptop-apple']
@@ -35,6 +36,13 @@ class HanoiComputer(scrapy.Spider):
             if len(params.css('td > p::text')) > 1:
                 params_name = params.css('td > p::text')[0].extract()
                 params_value = params.css('td> p::text')[1].extract()
+
+                if('vi xử lý' in params_name):
+                    params_name = 'cpu'
+                elif ('Bộ nhớ trong' in params_name):
+                    params_name = 'ram'
+                elif 'Ổ cứng' in params_name:
+                    params_name = 'rom'
             else:
                 params_name = "err_" + str(pid)
                 params_value = 'error_value'
@@ -44,4 +52,4 @@ class HanoiComputer(scrapy.Spider):
         item['website'] = self.allowed_domains[0]
         item['tssss'] = len(self.lst_url)
 
-        yield convert(item)
+        yield item

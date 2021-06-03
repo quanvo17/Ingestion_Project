@@ -1,5 +1,4 @@
 import scrapy
-from Crawler.matching import *
 
 
 class TrueSmart(scrapy.Spider):
@@ -38,11 +37,34 @@ class TrueSmart(scrapy.Spider):
                 try:
                     params_name = params.css('td > span ::text').extract_first().strip()
                     params_value = params.css('td::text').extract_first()
+                    
+                    if 'CPU' in params_name or 'cpu' in params_name:
+                        params_name = 'cpu'
+                    elif 'RAM' in params_name or 'ram' in params_name:
+                        params_name = 'ram'
+                    elif 'Ổ cứng' in params_name:
+                        params_name = 'rom'
+
                     item[params_name] = params_value
                 except:
                     pass
+        
+        if 'ram' not in item.keys() or item['ram'] == '':
+            if '8gb ram' in iname.lower():
+                item['ram'] = '8GB'
+            elif '16gb' in iname.lower():
+                item['ram'] = '16GB'  
+
+        if 'rom' not in item.keys() or item['rom'] == '':
+            if '128' in iname.lower():
+                item['rom'] = '128GB'
+            elif '256' in iname.lower():
+                item['rom'] = '256GB'
+            elif '512' in iname.lower():
+                item['rom'] = '512GB' 
+
 
         item['url'] = url
         item['website'] = self.allowed_domains[0]
 
-        yield convert(item)
+        yield item
