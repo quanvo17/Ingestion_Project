@@ -3,7 +3,7 @@ import re
 import unicodedata
 
 class TechOneAlt(scrapy.Spider):
-    name = 'macbook_TechOneAlt'
+    name = 'techonealt'
     allowed_domains = ['techone.vn']
     start_urls = ['https://www.techone.vn/macbook']
     lst_url = []

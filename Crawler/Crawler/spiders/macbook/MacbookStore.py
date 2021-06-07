@@ -1,8 +1,8 @@
 import scrapy
-
+from Crawler.matching import *
 
 class MacbookStore(scrapy.Spider):
-    name = 'macbook_MacbookStore'
+    name = 'MacbookStore'
     allowed_domains = ['macstores.vn']
     start_urls = ['https://macstores.vn/macbook-pro/']
     handle_httpstatus_list = [301]
@@ -51,5 +51,5 @@ class MacbookStore(scrapy.Spider):
         item['url'] = url
         item['website'] = self.allowed_domains[0]
         
-        yield item
+        yield convert(item)
 

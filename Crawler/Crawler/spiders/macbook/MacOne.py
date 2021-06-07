@@ -1,8 +1,8 @@
 import scrapy
-
+from Crawler.matching import *
 
 class MacOne(scrapy.Spider):
-    name = 'macbook_MacOne'
+    name = 'macone'
     allowed_domains = ['macone.vn']
     start_urls = ['https://macone.vn/macbook-cu-moi/']
     handle_httpstatus_list = [301]
@@ -43,4 +43,4 @@ class MacOne(scrapy.Spider):
         item['url'] = url
         item['website'] = self.allowed_domains[0]
 
-        yield item
+        yield convert(item)

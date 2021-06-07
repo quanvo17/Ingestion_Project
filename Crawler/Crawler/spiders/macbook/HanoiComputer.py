@@ -1,10 +1,10 @@
 import scrapy
 from scrapy.http import request
 import requests
-
+from Crawler.matching import *
 
 class Macbook24h(scrapy.Spider):
-    name = 'macbook_HanoiComputer'
+    name = 'hanoicom'
     allowed_domains = ['www.hanoicomputer.vn']
     start_urls = ['https://www.hanoicomputer.vn/laptop-apple']
     handle_httpstatus_list = [301]
@@ -52,4 +52,4 @@ class Macbook24h(scrapy.Spider):
         item['website'] = self.allowed_domains[0]
         item['tssss'] = len(self.lst_url)
 
-        yield item
+        yield convert(item)

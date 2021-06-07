@@ -1,8 +1,8 @@
 import scrapy
-
+from Crawler.matching import *
 
 class TrueSmart(scrapy.Spider):
-    name = 'macbook_TrueSmart'
+    name = 'truesmart'
     allowed_domains = ['truesmart.com.vn']
     start_urls = ['https://www.truesmart.com.vn/macbook.html']
     handle_httpstatus_list = [301]
@@ -67,4 +67,4 @@ class TrueSmart(scrapy.Spider):
         item['url'] = url
         item['website'] = self.allowed_domains[0]
 
-        yield item
+        yield convert(item)
