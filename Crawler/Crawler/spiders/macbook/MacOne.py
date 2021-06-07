@@ -2,7 +2,7 @@ import scrapy
 from Crawler.matching import *
 
 class MacOne(scrapy.Spider):
-    name = 'macone'
+    name = 'macbook_MacOne'
     allowed_domains = ['macone.vn']
     start_urls = ['https://macone.vn/macbook-cu-moi/']
     handle_httpstatus_list = [301]

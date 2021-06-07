@@ -3,7 +3,7 @@ from scrapy import item
 from Crawler.matching import *
 
 class MacbookCellphonesSpider(scrapy.Spider):
-    name = 'macbook_cellphoneS'
+    name = 'macbook_CellPhoneS'
     allowed_domains = ['cellphones.com.vn']
     start_urls = ['https://cellphones.com.vn/laptop/mac.html',
                   'https://cellphones.com.vn/laptop/mac.html?p=2']

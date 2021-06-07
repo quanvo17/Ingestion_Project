@@ -1,8 +1,9 @@
 import scrapy
 from Crawler.matching import *
 
+
 class Macbook24h(scrapy.Spider):
-    name = 'mac24h'
+    name = 'macbook_Mac24h'
     allowed_domains = ['mac24h.vn']
     start_urls = ['https://mac24h.vn/mac/']
     handle_httpstatus_list = [301]

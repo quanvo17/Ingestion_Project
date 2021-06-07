@@ -2,7 +2,7 @@ import scrapy
 from Crawler.matching import *
 
 class MacbookStore(scrapy.Spider):
-    name = 'MacbookStore'
+    name = 'macbook_MacbookStore'
     allowed_domains = ['macstores.vn']
     start_urls = ['https://macstores.vn/macbook-pro/']
     handle_httpstatus_list = [301]

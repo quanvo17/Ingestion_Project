@@ -3,8 +3,9 @@ from scrapy.http import request
 import requests
 from Crawler.matching import *
 
+
 class Macbook24h(scrapy.Spider):
-    name = 'hanoicom'
+    name = 'macbook_HanoiComputer'
     allowed_domains = ['www.hanoicomputer.vn']
     start_urls = ['https://www.hanoicomputer.vn/laptop-apple']
     handle_httpstatus_list = [301]
