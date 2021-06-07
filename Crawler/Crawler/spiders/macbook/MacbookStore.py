@@ -27,7 +27,7 @@ class MacbookStore(scrapy.Spider):
 
     def parse_macbook(self, response, url):
         item = dict()
-        item['product_name'] = response.css('div.product-title > h1::text').extract_first()
+        item['name'] = response.css('div.product-title > h1::text').extract_first()
 
         item['price_sale'] = response.css('p.price > span ::text').extract_first()
 
